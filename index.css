@@ -1,0 +1,23 @@
+body {
+  font-family: "Inter", sans-serif;
+  background-color: #f0f4f8; /* Light gray background */
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* Align to top to allow scrolling */
+  min-height: 100vh;
+  padding: 20px;
+  box-sizing: border-box;
+}
+/* Style for the drag-and-drop area */
+.drop-area {
+  border: 2px dashed #cbd5e1; /* Slate-300 */
+  background-color: #f8fafc; /* Slate-50 */
+  transition: background-color 0.3s ease;
+}
+.drop-area.highlight {
+  background-color: #e2e8f0; /* Slate-200 */
+}
+/* Hide default file input */
+input[type="file"] {
+  display: none;
+}

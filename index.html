@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Banner Resizer</title>
+    <link rel="stylesheet" href="./index.css" />
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="antialiased">
+    <div
+      class="container mx-auto p-6 bg-white shadow-lg rounded-xl max-w-4xl w-full my-8"
+    >
+      <h1 class="text-4xl font-extrabold text-center text-gray-900 mb-8">
+        <span class="bg-clip-text"> Banner Resizer </span>
+      </h1>
+
+      <!-- File Upload/Drag & Drop Section -->
+      <div
+        class="mb-8 p-6 border-2 border-dashed border-blue-400 rounded-xl bg-blue-50 text-center drop-area"
+        id="dropArea"
+      >
+        <input type="file" id="imageUpload" accept="image/*" class="hidden" />
+        <label
+          for="imageUpload"
+          class="cursor-pointer block py-8 text-blue-700 hover:text-blue-900 transition-colors duration-200"
+        >
+          <svg
+            class="mx-auto h-12 w-12 text-blue-500 mb-3"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M7 16a4 4 0 01-.88-7.903A5 5 0 0115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+            ></path>
+          </svg>
+          <p class="text-lg font-semibold">
+            Drag & Drop your banner here, or
+            <span class="underline">click to upload</span>
+          </p>
+          <p class="text-sm text-blue-600 mt-1">Supports PNG, JPG, JPEG, GIF</p>
+        </label>
+        <p id="fileName" class="mt-4 text-gray-700 font-medium"></p>
+      </div>
+
+      <!-- Image Display and Controls Section -->
+      <div
+        id="imageControls"
+        class="hidden grid grid-cols-1 md:grid-cols-2 gap-8"
+      >
+        <!-- Original Image Display -->
+        <div class="bg-gray-50 p-6 rounded-lg shadow-inner">
+          <h2 class="text-2xl font-bold text-gray-800 mb-4">Original Banner</h2>
+          <div
+            class="flex justify-center items-center h-64 bg-gray-200 rounded-lg overflow-hidden mb-4"
+          >
+            <img
+              id="originalImage"
+              src=""
+              alt="Original Image"
+              class="max-w-full max-h-full object-contain rounded-md"
+            />
+          </div>
+          <p class="text-gray-700 text-sm">
+            Dimensions:
+            <span id="originalDimensions" class="font-semibold"></span>
+          </p>
+        </div>
+
+        <!-- Resize Controls -->
+        <div class="bg-gray-50 p-6 rounded-lg shadow-inner">
+          <h2 class="text-2xl font-bold text-gray-800 mb-4">
+            Resizing Options
+          </h2>
+          <!-- Social Media Presets Dropdown -->
+          <div class="mb-4">
+            <label
+              for="socialPreset"
+              class="block text-sm font-medium text-gray-700 mb-1"
+              >Social Media Types</label
+            >
+            <select
+              id="socialPreset"
+              class="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm bg-white"
+            >
+              <option value="">-- Select a type --</option>
+              <optgroup label="Facebook">
+                <option value="fb_profile">Profile Photo (170x170)</option>
+                <option value="fb_cover">Cover Photo (820x312)</option>
+                <option value="fb_post_square">
+                  Post (Square - 1200x1200)
+                </option>
+                <option value="fb_post_landscape">
+                  Post (Landscape - 1200x630)
+                </option>
+              </optgroup>
+              <optgroup label="Instagram">
+                <option value="ig_profile">Profile Photo (320x320)</option>
+                <option value="ig_post_square">
+                  Post (Square - 1080x1080)
+                </option>
+                <option value="ig_post_portrait">
+                  Post (Portrait - 1080x1350)
+                </option>
+                <option value="ig_story">Story (1080x1920)</option>
+              </optgroup>
+              <optgroup label="X (Twitter)">
+                <option value="x_profile">Profile Photo (400x400)</option>
+                <option value="x_header">Header Photo (1500x500)</option>
+                <option value="x_post">Post Image (1200x675)</option>
+              </optgroup>
+              <optgroup label="SnapChat">
+                <option value="sc_profile">Profile Photo (320x320)</option>
+                <option value="sc_stories">Stories (1080x1920)</option>
+              </optgroup>
+              <optgroup label="YouTube">
+                <option value="yt_profile">Profile Photo (800x800)</option>
+                <option value="yt_thumbnail">Thumbnail (1280x720)</option>
+                <option value="yt_banner">Channel Banner (2560x1440)</option>
+              </optgroup>
+              <optgroup label="Bluesky">
+                <option value="bs_profile">Profile Photo (400x400)</option>
+                <option value="bs_banner">Banner (1000x1500)</option>
+                <option value="bs_sqrPost">Post (Square - 1000x1500)</option>
+                <option value="bs_lsPost">Post (Landscape - 1200x627)</option>
+                <option value="bs_potrait">Post (Potrait - 627x1200)</option>
+              </optgroup>
+            </select>
+          </div>
+          <div class="grid grid-cols-2 gap-4 mb-6">
+            <div>
+              <label
+                for="newWidth"
+                class="block text-sm font-medium text-gray-700 mb-1"
+                >New Width (px)</label
+              >
+              <input
+                type="number"
+                id="newWidth"
+                min="1"
+                class="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              />
+            </div>
+            <div>
+              <label
+                for="newHeight"
+                class="block text-sm font-medium text-gray-700 mb-1"
+                >New Height (px)</label
+              >
+              <input
+                type="number"
+                id="newHeight"
+                min="1"
+                class="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              />
+            </div>
+          </div>
+          <button
+            id="resizeButton"
+            class="w-full bg-gradient-to-r from-green-400 to-blue-500 hover:from-green-500 hover:to-blue-600 text-white font-bold py-3 px-6 rounded-lg shadow-md transition-all duration-300 transform hover:scale-105"
+          >
+            Resize Banner
+          </button>
+        </div>
+      </div>
+
+      <!-- Resized Image Display -->
+      <div
+        id="resizedImageSection"
+        class="hidden mt-8 p-6 bg-gray-50 rounded-lg shadow-lg"
+      >
+        <h2 class="text-2xl font-bold text-gray-800 mb-4">Resized Banner</h2>
+        <div
+          class="flex justify-center items-center min-h-[200px] bg-gray-200 rounded-lg overflow-hidden mb-4"
+        >
+          <canvas
+            id="imageCanvas"
+            class="max-w-full h-auto object-contain rounded-md border border-gray-300"
+          ></canvas>
+        </div>
+        <div class="text-center">
+          <a
+            id="downloadLink"
+            download="resized_image.png"
+            class="inline-block bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-bold py-3 px-6 rounded-lg shadow-md transition-all duration-300 transform hover:scale-105"
+          >
+            Download Resized Banner
+          </a>
+        </div>
+      </div>
+
+      <!-- Message Box -->
+      <div
+        id="messageBox"
+        class="hidden mt-8 p-4 rounded-lg text-white text-center font-semibold transition-all duration-300"
+      ></div>
+    </div>
+
+    <script src="./index.js"></script>
+  </body>
+</html>
