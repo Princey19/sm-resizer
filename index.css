@@ -21,3 +21,21 @@ body {
 input[type="file"] {
   display: none;
 }
+
+.banner-editor {
+  color: white;
+}
+
+a {
+  background: dodgerblue;
+  color: #ffffff;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 10px;
+  text-decoration: none;
+  width: 120px;
+}
+a:hover {
+  padding: 10px 20px;
+  background: rgb(61, 158, 254);
+}
